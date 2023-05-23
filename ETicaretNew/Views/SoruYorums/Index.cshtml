@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ETicaretNew.Models.SoruYorum>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Sorular ve Yorumlar</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+             <th>
+                @Html.DisplayNameFor(model => model.YorumId)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.UyeId)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.UrunId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YorumTarihSaati)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Yorum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KontrolEdildiMi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Urun)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Uye)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.YorumId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UyeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrunId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YorumTarihSaati)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Yorum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KontrolEdildiMi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Urun.UrunId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Uye.UyeId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.YorumId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.YorumId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.YorumId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

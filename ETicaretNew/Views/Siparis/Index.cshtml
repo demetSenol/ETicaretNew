@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ETicaretNew.Models.Sipari>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Sipariş</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SiparisId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tutar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Uye)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SiparisId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tutar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adres.AdresId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Uye.UyeId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SiparisId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SiparisId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SiparisId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

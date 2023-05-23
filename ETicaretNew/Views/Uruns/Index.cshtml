@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ETicaretNew.Models.Urun>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Ürünler</h1>
+
+<p>  
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Numara
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aciklama)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fiyat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anasayfa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stok)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KategoriId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+      
+@foreach (var item in Model) {
+            <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Adi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aciklama)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fiyat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anasayfa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stok)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KategoriId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UrunId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.UrunId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.UrunId">Delete</a>
+            </td>
+        </tr>
+
+}    
+    </tbody>
+</table>

@@ -1,0 +1,57 @@
+﻿@model ETicaretNew.Models.SiparisUrun
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>SiparisUrun</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="KayitId" />
+            <div class="form-group">
+                <label asp-for="SiparisId" class="control-label"></label>
+                <select asp-for="SiparisId" class="form-control" asp-items="ViewBag.SiparisId"></select>
+                <span asp-validation-for="SiparisId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UrunId" class="control-label"></label>
+                <select asp-for="UrunId" class="form-control" asp-items="ViewBag.UrunId"></select>
+                <span asp-validation-for="UrunId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SiparisTarihi" class="control-label"></label>
+                <input asp-for="SiparisTarihi" class="form-control" />
+                <span asp-validation-for="SiparisTarihi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SiparisDurumu" class="control-label"></label>
+                <input asp-for="SiparisDurumu" class="form-control" />
+                <span asp-validation-for="SiparisDurumu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Adet" class="control-label"></label>
+                <input asp-for="Adet" class="form-control" />
+                <span asp-validation-for="Adet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BririmFiyat" class="control-label"></label>
+                <input asp-for="BririmFiyat" class="form-control" />
+                <span asp-validation-for="BririmFiyat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ETicaretNew.Models.Kategori>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Kategoriler</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KategoriId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adi)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.KategoriId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adi)
+            </td>
+            
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.KategoriId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.KategoriId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.KategoriId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

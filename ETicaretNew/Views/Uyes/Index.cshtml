@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ETicaretNew.Models.Uye>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Üyeler</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UyeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Soyadi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TelefonNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ilce)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Il)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostaKodu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sifre)
+            </th>    
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UyeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Soyadi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelefonNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ilce)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Il)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostaKodu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sifre)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UyeId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.UyeId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.UyeId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
