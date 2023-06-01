@@ -21,7 +21,7 @@ namespace ETicaretNew.Controllers
         // GET: SiparisUruns
         public async Task<IActionResult> Index()
         {
-            var eticaretContext = _context.SiparisUruns.Include(s => s.Siparis).Include(s => s.Urun);
+            var eticaretContext = _context.SiparisUruns.Include(s => s.SiparisId).Include(s => s.Urun);
             return View(await eticaretContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace ETicaretNew.Controllers
             }
 
             var siparisUrun = await _context.SiparisUruns
-                .Include(s => s.Siparis)
+                .Include(s => s.SiparisId)
                 .Include(s => s.Urun)
                 .FirstOrDefaultAsync(m => m.KayitId == id);
             if (siparisUrun == null)
@@ -135,7 +135,7 @@ namespace ETicaretNew.Controllers
             }
 
             var siparisUrun = await _context.SiparisUruns
-                .Include(s => s.Siparis)
+                .Include(s => s.SiparisId)
                 .Include(s => s.Urun)
                 .FirstOrDefaultAsync(m => m.KayitId == id);
             if (siparisUrun == null)

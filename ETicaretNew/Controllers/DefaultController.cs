@@ -10,7 +10,7 @@ namespace ETicaretNew.Controllers
         {
             return View();
         }
-        public IActionResult  Cart()
+        public IActionResult Cart()
         {
             return View();
         }
@@ -22,7 +22,14 @@ namespace ETicaretNew.Controllers
         {
             return View();
         }
-
+        public IActionResult Product()
+        {
+            return View();
+        }
+       
         
+
+
+
     }
 }

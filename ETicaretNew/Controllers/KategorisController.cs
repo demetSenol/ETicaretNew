@@ -21,7 +21,7 @@ namespace ETicaretNew.Controllers
         // GET: Kategoris
         public async Task<IActionResult> Index()
         {
-            var eticaretContext = _context.Kategoris.Include(k => k.Urun);
+            var eticaretContext = _context.Kategoris.Include(k => k.Adi);
             return View(await eticaretContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace ETicaretNew.Controllers
             }
 
             var kategori = await _context.Kategoris
-                .Include(k => k.Urun)
+                .Include(k => k.Adi)
                 .FirstOrDefaultAsync(m => m.KategoriId == id);
             if (kategori == null)
             {
@@ -56,7 +56,7 @@ namespace ETicaretNew.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("KategoriId,Adi,UrunId")] Kategori kategori)
+        public async Task<IActionResult> Create([FromForm] Kategori kategori)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace ETicaretNew.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "UrunId", kategori.UrunId);
+            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "UrunId", kategori.Adi);
             return View(kategori);
         }
 
@@ -81,7 +81,7 @@ namespace ETicaretNew.Controllers
             {
                 return NotFound();
             }
-            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "UrunId", kategori.UrunId);
+            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "UrunId", kategori.Adi);
             return View(kategori);
         }
 
@@ -117,7 +117,7 @@ namespace ETicaretNew.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "UrunId", kategori.UrunId);
+            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "UrunId", kategori.Adi);
             return View(kategori);
         }
 
@@ -130,7 +130,7 @@ namespace ETicaretNew.Controllers
             }
 
             var kategori = await _context.Kategoris
-                .Include(k => k.Urun)
+                .Include(k => k.Adi)
                 .FirstOrDefaultAsync(m => m.KategoriId == id);
             if (kategori == null)
             {

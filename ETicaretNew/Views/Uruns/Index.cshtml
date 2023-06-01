@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<ETicaretNew.Models.Urun>
 
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -9,13 +10,12 @@
 
 <p>  
     <a asp-action="Create">Create New</a>
+
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                Numara
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Adi)
             </th>
@@ -33,7 +33,13 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.KategoriId)
-            </th>
+                 @* <select>
+                <option value="">Seçiniz</option>
+                @foreach (var kategori in Model)
+                {
+                    <option value="@kategori.KategoriId">@kategori.Adi</option>
+                }
+            </select>*@
             <th></th>
         </tr>
     </thead>
@@ -58,7 +64,15 @@
                 @Html.DisplayFor(modelItem => item.Stok)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.KategoriId)
+                    @Html.DisplayFor(modelItem => item.KategoriId)
+              @* 
+                  <select>
+                <option value="">Seçiniz</option>
+                @foreach (var kategori in Model)
+                {
+                    <option value="@kategori.KategoriId">@kategori.Adi</option>
+                }
+            </select>*@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.UrunId">Edit</a> |

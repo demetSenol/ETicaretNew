@@ -48,6 +48,7 @@ namespace ETicaretNew.Controllers
         // GET: Uruns/Create
         public IActionResult Create()
         {
+            ViewData["KategoriId"] = new SelectList(_context.Kategoris, "KategoriId", "Adi");
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace ETicaretNew.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UrunId,Adi,Aciklama,Fiyat,Anasayfa,Stok,KategoriId")] Urun urun)
+        public async Task<IActionResult> Create([FromForm] Urun urun)
         {
             if (ModelState.IsValid)
             {

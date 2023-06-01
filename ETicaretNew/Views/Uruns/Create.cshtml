@@ -40,11 +40,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="KategoriId" class="control-label"></label>
-                <input asp-for="KategoriId" class="form-control" />
-                <span asp-validation-for="KategoriId" class="text-danger"></span>
+                <select asp-for="KategoriId" class="form-control" asp-items="@ViewBag.KategoriId"></select>
+               @* <input asp-for="KategoriId" class="form-control" />
+                <span asp-validation-for="KategoriId" class="text-danger"></span>*@
+
+               @* <select>
+                    <option value="">Seçiniz</option>
+                    @foreach (var kategori in Model)
+                    {
+                        <option value="@kategori.KategoriId">@kategori.Adi</option>
+                    }
+                </select>*@
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary"/>
             </div>
         </form>
     </div>

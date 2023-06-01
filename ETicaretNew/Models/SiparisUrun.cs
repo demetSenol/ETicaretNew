@@ -19,5 +19,7 @@ public partial class SiparisUrun
 
     public decimal? BririmFiyat { get; set; }
 
+    public virtual Sipari? Siparis { get; set; }
+
     public virtual Urun? Urun { get; set; }
 }

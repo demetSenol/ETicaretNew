@@ -15,5 +15,7 @@ public partial class Sipari
 
     public virtual Adre? Adres { get; set; }
 
+    public virtual ICollection<SiparisUrun> SiparisUruns { get; set; } = new List<SiparisUrun>();
+
     public virtual Uye? Uye { get; set; }
 }
