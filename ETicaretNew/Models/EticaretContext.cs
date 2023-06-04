@@ -35,7 +35,8 @@ public partial class EticaretContext : DbContext
 
     public virtual DbSet<Yonetici> Yoneticis { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Data Source=DESKTOPI6AM0E5;Initial Catalog=ETicaret;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOPI6AM0E5;Initial Catalog=ETicaret;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -205,7 +206,10 @@ public partial class EticaretContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("email");
-            entity.Property(e => e.Sifre).HasColumnName("sifre");
+            entity.Property(e => e.Sifre)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("sifre");
         });
 
         modelBuilder.Entity<Uye>(entity =>

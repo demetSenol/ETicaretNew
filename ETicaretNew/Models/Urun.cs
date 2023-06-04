@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ETicaretNew.Models;
 
 public partial class Urun
 {
-    public int UrunId { get; set; }
+	[NotMapped]
+	public List<IFormFile> ResimFile { get; set; }
+	public int UrunId { get; set; }
 
     public string? Adi { get; set; }
 

@@ -11,11 +11,11 @@ namespace ETicaretNew.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly EticaretContext _context;
+		private readonly EticaretContext _context;
 
-        public UsersController(EticaretContext context)
+        public UsersController()
         {
-            _context = context;
+            _context =new EticaretContext();
         }
 
         // GET: Users

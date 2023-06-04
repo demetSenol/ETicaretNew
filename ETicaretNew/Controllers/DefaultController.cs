@@ -3,18 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ETicaretNew.Controllers
 {
+        [AllowAnonymous]
     public class DefaultController : Controller
     {
-        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
         public IActionResult Cart()
-        {
-            return View();
-        }
-        public IActionResult Login()
         {
             return View();
         }

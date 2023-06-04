@@ -11,5 +11,7 @@ public partial class User
 
     public string? Email { get; set; }
 
-    public int? Sifre { get; set; }
+    public string? Sifre { get; set; }
+
+    public int? IsActive { get; set; }
 }

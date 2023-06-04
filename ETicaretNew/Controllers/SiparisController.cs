@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ETicaretNew.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ETicaretNew.Controllers
 {
+    [Authorize]
     public class SiparisController : Controller
     {
         private readonly EticaretContext _context;

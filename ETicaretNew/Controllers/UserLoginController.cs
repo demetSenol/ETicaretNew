@@ -7,64 +7,76 @@ using System.Security.Claims;
 
 namespace ETicaretNew.Controllers
 {
-    public class UserLoginController : Controller
-    {
-        private readonly EticaretContext _context;
+	public class UserLoginController : Controller
+	{
+		private readonly EticaretContext _context;
 
-        public UserLoginController()
-        {
-            _context = new EticaretContext();
-        }
+		public UserLoginController()
+		{
+			_context = new EticaretContext();
+		}
 
-        public IActionResult Register()
-        {
-            return View();
-        }
+		public IActionResult Register()
+		{
+			return View();
+		}
 
-        public IActionResult Login()
-        {
-            return View();
-        }
-        public IActionResult Index()
-        {
-            ClaimsPrincipal claimUser = HttpContext.User;
-            if (claimUser.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "User");
-            }
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> Index([FromForm] User p)
-        {
+		public IActionResult Login()
+		{
+			return View();
+		}
+		//public IActionResult Index()
+		//{
+		//    ClaimsPrincipal claimUser = HttpContext.User;
+		//    if (claimUser.Identity.IsAuthenticated)
+		//    {
+		//        return RedirectToAction("Index", "Default");
+		//    }
+		//    return View();
+		//}
+		[HttpPost]
+		public async Task<IActionResult> Login([FromForm] User entity)
+		{
 
-            var bilgiler = _context.Users.FirstOrDefault(x => x.Email == p.Email && x.Sifre == p.Sifre);
-            if (bilgiler != null)
-            {
+			try
+			{
+				if (ModelState.IsValid)//viewden gelen modelde bir sıkıntı var mı 
+				{
+					if (CheckUser(entity.Email, entity.Sifre))//user var mı yok mu diye kontrol ettik
+					{//veriler doğru ise
+						var claims = new List<Claim>();
+						claims.Add(new Claim(ClaimTypes.NameIdentifier, entity.Email));
+						ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+						ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+						await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+						return RedirectToAction("Index", "Default");
+					}
+					else //yoksa böyle bir hata alsın 
+					{
+						throw new Exception("User not found!");
+					}
+				}
+				else
+				{
+					throw new Exception("Please check form data!");
+				}
+			}
+			catch (Exception ex)
+			{
+				TempData["msg"] = ex.Message;
+			}
+			return View(entity);
+		}
+		private bool CheckUser(string email, string sifre)//kullanıcının olup olmadığını anlayabilmek için oluşturduğumuz metod
+		{
+			var user = _context.Users.FirstOrDefault(x => x.Email == email && x.Sifre == sifre);
 
-                List<Claim> claims = new List<Claim>() {
-                new Claim(ClaimTypes.NameIdentifier,p.Email),
-				new Claim("OtherProperties","Demet"),
-				new Claim(ClaimTypes.Role,"User")
-                };
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                AuthenticationProperties properties = new AuthenticationProperties()
-                {
-                    AllowRefresh = true,
-                    //IsPersistent = Convert.ToBoolean(p.Durum)
-                };
+			return user != null;
+		}
+		public IActionResult Logout()
+		{
+			return View();
+		}
 
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), properties);
-
-
-                return RedirectToAction("Index", "Default");
-            }
-            else
-            {
-                TempData["hata"] = "Giriş bilgileriniz yanlış";
-                return RedirectToAction("UserLogin", "Login");
-            }
-        }
-      
-    }
+	}
 }
