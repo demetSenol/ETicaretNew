@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace ETicaretNew.Controllers
 {
@@ -16,8 +17,13 @@ namespace ETicaretNew.Controllers
 			_context = new EticaretContext();
 		}
 
-		public IActionResult Register()
+		public IActionResult Register(User model)
 		{
+			//register işlemleri buarad
+			//if(ModelState.IsValid)
+			//{
+			//	var user = new IdentityUser {}
+			//}
 			return View();
 		}
 

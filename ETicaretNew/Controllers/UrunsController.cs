@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ETicaretNew.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ETicaretNew.Models;
 
 namespace ETicaretNew.Controllers
 {
@@ -17,11 +13,11 @@ namespace ETicaretNew.Controllers
         {
             _context = new EticaretContext();
         }
-
+        PublicClass publicClass = new PublicClass();
         // GET: Uruns
         public IActionResult Index()
         {
-            _context=new EticaretContext();
+             _context=new EticaretContext();
               return _context.Uruns != null ? 
                           View( _context.Uruns.ToList()) :
                           Problem("Entity set 'EticaretContext.Uruns'  is null.");
@@ -46,12 +42,13 @@ namespace ETicaretNew.Controllers
         }
 
         // GET: Uruns/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            
             ViewData["KategoriId"] = new SelectList(_context.Kategoris, "KategoriId", "Adi");
             return View();
-        }
 
+        }
         // POST: Uruns/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -62,6 +59,16 @@ namespace ETicaretNew.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(urun);
+                foreach (var file in urun.ImageFile)
+                {
+                    var galeri = new Galeri
+                    {
+                        Resim = publicClass.ImgToBase64(file)
+                    };
+
+                    urun.Galeris.Add(galeri); // Her bir resmi araclar.AracResims'e ekleyin
+                }
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -101,8 +108,18 @@ namespace ETicaretNew.Controllers
                 try
                 {
                     _context.Update(urun);
+                    foreach (var file in urun.ImageFile)
+                    {
+                        var galeri = new Galeri
+                        {
+                            Resim = publicClass.ImgToBase64(file)
+                        };
+
+                        urun.Galeris.Add(galeri); // Her bir resmi urun.Galeris'e ekleyin
+                    }
                     await _context.SaveChangesAsync();
                 }
+                   
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!UrunExists(urun.UrunId))
@@ -149,6 +166,14 @@ namespace ETicaretNew.Controllers
             var urun = await _context.Uruns.FindAsync(id);
             if (urun != null)
             {
+                var resims = _context.Galeris.Where(m => m.UrunId == id).ToList();
+                if (resims.Count > 0)
+                {
+                    foreach (var resim in resims)
+                    {
+                        _context.Galeris.Remove(resim);
+                    }
+                }
                 _context.Uruns.Remove(urun);
             }
             

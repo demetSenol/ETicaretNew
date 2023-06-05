@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ETicaretNew.Models;
 
 public partial class Urun
 {
-	[NotMapped]
-	public List<IFormFile> ResimFile { get; set; }
-	public int UrunId { get; set; }
+    public int UrunId { get; set; }
 
     public string? Adi { get; set; }
 
@@ -25,8 +22,6 @@ public partial class Urun
     public int? ResimId { get; set; }
 
     public virtual ICollection<Galeri> Galeris { get; set; } = new List<Galeri>();
-
-    public virtual Galeri? Resim { get; set; }
 
     public virtual ICollection<SiparisUrun> SiparisUruns { get; set; } = new List<SiparisUrun>();
 

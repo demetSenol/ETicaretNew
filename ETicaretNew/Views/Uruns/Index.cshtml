@@ -40,6 +40,9 @@
                     <option value="@kategori.KategoriId">@kategori.Adi</option>
                 }
             </select>*@
+            <th>
+                Resim
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -74,6 +77,22 @@
                 }
             </select>*@
             </td>
+                <td>
+
+                    @{
+                        var c = item.GetGaleris(item.UrunId);
+
+                        if (c != null)
+                        {
+                            @foreach (var ite in c)
+                            {
+                                <text>
+                                    <img src="data:image;base64,@Html.DisplayFor(modelItem => ite.Resim)" alt="base64 e dönüştürülmüş resim" style="height:80px; width:80px;">
+                                </text>
+                            }}
+                    }
+                </td>
+                @item.UrunId
             <td>
                 <a asp-action="Edit" asp-route-id="@item.UrunId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.UrunId">Details</a> |
