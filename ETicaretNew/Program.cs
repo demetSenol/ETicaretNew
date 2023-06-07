@@ -19,18 +19,7 @@ builder.Services.AddControllersWithViews();
 //});
 
 
-////farklý bir yol deneyecem
-//public void ConfigureServices(IServiceCollection services) 
-//{
-//	// Kimlik doðrulama için DbContext'i yapýlandýrýn
-//	services.AddDbContext<EticaretContext>(options =>
-//options.UseSqlServer(Configuration.GetConnectionString("Data Source=DESKTOPI6AM0E5;Initial Catalog=ETicaret;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False")));
 
-//	// Kimlik doðrulama hizmetlerini yapýlandýrýn
-//	services.AddIdentity<IdentityUser, IdentityRole()
-//		.AddEntityFrameworkStores<EticaretContext>()
-//			.AddDefaultTokenProviders();
-//}
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x =>

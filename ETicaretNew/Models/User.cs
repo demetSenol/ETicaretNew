@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ETicaretNew.Models;
 [MetadataType(typeof(UserMetaData))]
-public partial class User   // : IdentityUser
+public partial class User 
 {
     public int UserId { get; set; }
 

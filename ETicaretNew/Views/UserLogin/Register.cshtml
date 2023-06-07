@@ -5,33 +5,25 @@
     Layout = "~/Views/Shared/_FrontendLayout.cshtml";
 }
 
-<h2>reister</h2>
 
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form  asp-action="Register" asp-controller="UserLogin">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Adi" class="control-label"></label>
-                <input asp-for="Adi" class="form-control" />
-                <span asp-validation-for="Adi" class="text-danger"></span>
+<section id="form">
+    <!--form-->
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-3">
+                <div class="signup-form">
+                    <!--sign up form-->
+                    <h2>Üye Ol</h2>
+                    <form asp-controller="UserLogin" asp-action="Register">
+                        <input type="text" asp-for="Adi" placeholder="Kullanıcı Adı"/>
+                        <input type="email" asp-for="Email" placeholder="Email Adresi"/>
+                        <input type="password" asp-for="Sifre" placeholder="Şifre" />
+                        <button type="submit" class="btn btn-default" value="Register">Kayıt Ol</button>
+                    </form>
+                </div><!--/sign up form-->
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Sifre" class="control-label"></label>
-                <input asp-for="Sifre" class="form-control" />
-                <span asp-validation-for="Sifre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</section>
 

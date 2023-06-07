@@ -10,19 +10,11 @@ namespace ETicaretNew.Controllers
 {
 	public class UserLoginController : Controller
 	{
-		//yeni kullanıcı oluşturur
-		//kullanıcı oluşturma, düzenleme, silme, parola sıfırlama
-			//private readonly UserManager<IdentityUser> _userManager;
-			//private readonly SignInManager<IdentityUser> _signInManager;
-		//kullanıcı oturumu yönetimi ve kimlik doğrulama işlevleri
 
 		private readonly EticaretContext _context;
 
 		public UserLoginController()
 		{
-			//_userManager = userManager;
-			//_signInManager = signInManager;
-
 			_context = new EticaretContext();
 		}
 		[HttpGet]
@@ -34,26 +26,6 @@ namespace ETicaretNew.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromForm]User user)
 		{
-            //register işlemleri
-            //if(ModelState.IsValid)
-            //{
-            //	var user = new IdentityUser 
-            //	{ 
-            //		UserName = model.Adi, 
-            //		Email = model.Email 
-            //	};
-            //	var result = await _userManager.CreateAsync(user, model.Sifre);
-            //	if (result.Succeeded)
-            //	{
-            //		await _signInManager.SignInAsync(user, isPersistent: false);
-            //		return RedirectToAction("Index","Default");
-            //	}
-            //	foreach (var error in result.Errors)
-            //	{
-            //		ModelState.AddModelError("", error.Description);
-            //	}
-            //}
-            //return View(model);
             
                 if (ModelState.IsValid)
                 {
