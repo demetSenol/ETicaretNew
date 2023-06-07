@@ -8,7 +8,7 @@ namespace ETicaretNew.Models
 		public List<IFormFile> ImageFile{ get; set; }
 
 		[NotMapped]
-        public List<Galeri>? Resims { get; set; }
+        public List<Galeri>? Resimler { get; set; }
 
         public List<Galeri> GetGaleris(int urunId)
         {

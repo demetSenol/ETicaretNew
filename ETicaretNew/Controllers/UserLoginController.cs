@@ -10,36 +10,67 @@ namespace ETicaretNew.Controllers
 {
 	public class UserLoginController : Controller
 	{
+		//yeni kullanıcı oluşturur
+		//kullanıcı oluşturma, düzenleme, silme, parola sıfırlama
+			//private readonly UserManager<IdentityUser> _userManager;
+			//private readonly SignInManager<IdentityUser> _signInManager;
+		//kullanıcı oturumu yönetimi ve kimlik doğrulama işlevleri
+
 		private readonly EticaretContext _context;
 
 		public UserLoginController()
 		{
+			//_userManager = userManager;
+			//_signInManager = signInManager;
+
 			_context = new EticaretContext();
 		}
-
-		public IActionResult Register(User model)
-		{
-			//register işlemleri buarad
-			//if(ModelState.IsValid)
-			//{
-			//	var user = new IdentityUser {}
-			//}
-			return View();
-		}
-
-		public IActionResult Login()
+		[HttpGet]
+		public IActionResult Register()
 		{
 			return View();
 		}
-		//public IActionResult Index()
-		//{
-		//    ClaimsPrincipal claimUser = HttpContext.User;
-		//    if (claimUser.Identity.IsAuthenticated)
-		//    {
-		//        return RedirectToAction("Index", "Default");
-		//    }
-		//    return View();
-		//}
+		[HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([FromForm]User user)
+		{
+            //register işlemleri
+            //if(ModelState.IsValid)
+            //{
+            //	var user = new IdentityUser 
+            //	{ 
+            //		UserName = model.Adi, 
+            //		Email = model.Email 
+            //	};
+            //	var result = await _userManager.CreateAsync(user, model.Sifre);
+            //	if (result.Succeeded)
+            //	{
+            //		await _signInManager.SignInAsync(user, isPersistent: false);
+            //		return RedirectToAction("Index","Default");
+            //	}
+            //	foreach (var error in result.Errors)
+            //	{
+            //		ModelState.AddModelError("", error.Description);
+            //	}
+            //}
+            //return View(model);
+            
+                if (ModelState.IsValid)
+                {
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Login));
+                }
+                return View(user);
+            
+
+        }
+
+        public IActionResult Login()
+		{
+			return View();
+		}
+		
 		[HttpPost]
 		public async Task<IActionResult> Login([FromForm] User entity)
 		{

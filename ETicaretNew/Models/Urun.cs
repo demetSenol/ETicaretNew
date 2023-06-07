@@ -23,6 +23,8 @@ public partial class Urun
 
     public virtual ICollection<Galeri> Galeris { get; set; } = new List<Galeri>();
 
+    public virtual Kategori? Kategori { get; set; }
+
     public virtual ICollection<SiparisUrun> SiparisUruns { get; set; } = new List<SiparisUrun>();
 
     public virtual ICollection<SoruYorum> SoruYorums { get; set; } = new List<SoruYorum>();

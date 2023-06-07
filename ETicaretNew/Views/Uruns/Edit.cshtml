@@ -44,6 +44,28 @@
                 <input asp-for="KategoriId" class="form-control" />
                 <span asp-validation-for="KategoriId" class="text-danger"></span>
             </div>
+            <div>
+                @{
+                    var u = Model.GetGaleris(Model.UrunId);
+
+                    if (u != null)
+                    {
+                        @foreach (var item in u)
+                        {
+                            <text>
+                                <div>
+                                    <img src="data:image;base64,@Html.DisplayFor(modelItem => item.Resim)" alt="base64 e dönüştürülmüş resim" style="height:80px; width:80px;"> <br />
+                                    <a asp-action="Delete" asp-controller="Galeris" asp-route-id="@item.UrunId">Delete</a>
+                                </div>
+                            </text>
+                        }}
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" placeholder="Yeni Resim Ekle" id="imageInput" class="form-control" type="file" multiple />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

@@ -47,6 +47,23 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.KategoriId)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Resimler)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var u = Model.GetGaleris(Model.UrunId);
+
+                if (u != null)
+                {
+                    @foreach (var item in u)
+                    {
+                        <text>
+                            <img src="data:image;base64,@Html.DisplayFor(modelItem => item.Resim)" alt="base64 e dönüştürülmüş resim" style="height:80px; width:80px;">
+                        </text>
+                    }}
+            }
+        </dd>
     </dl>
 </div>
 <div>
