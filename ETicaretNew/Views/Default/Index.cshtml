@@ -1,28 +1,13 @@
 ﻿@model IEnumerable<ETicaretNew.Models.Urun>
 @using ETicaretNew.Models;
-@using System.Security.Claims;
+
 
 @{
 	ViewData["Title"] = "anasayfa";
 	Layout = "~/Views/Shared/_FrontendLayout.cshtml";
-
-	var username = "";
-	if (User.Identity.IsAuthenticated) //oturum açtı mı diye kontrol ettik
-	{
-		username = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-	}
 }
 
-@if (User.Identity.IsAuthenticated)
-{
-	<div>
-		Logged in Username : @username
-	</div>
-	<div>
-		@Html.ActionLink("Logout","Logout","UserLogin");
-	</div>
 
-}
 
 @*Model.Count()*@
 <!-- SECTION -->
@@ -112,7 +97,16 @@
 									<div class="product">
 
 										<div class="product-img">
-											<img src="~/frontend/img/product01.png" alt="">
+											@{
+												var c = item.GetGaleris(item.UrunId);
+												if (c != null)
+												{
+													var resim =c.FirstOrDefault(x => x.UrunId == item.UrunId);
+													<text>
+														<img src="data:image;base64,@Html.DisplayFor(modelItem => resim.Resim )" alt="ürün resim" style="height:80px; width:80px;">
+												 </text>
+											    }
+											}
 											<div class="product-label">
 												<span class="sale">-30%</span>
 												<span class="new">NEW</span>

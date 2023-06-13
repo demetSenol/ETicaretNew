@@ -1,4 +1,4 @@
-﻿
+﻿@using System.Security.Claims;
 @{
 
 }
@@ -61,8 +61,33 @@
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-						<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+					<li>
+						@{
+
+	var username = "";
+	if (User.Identity.IsAuthenticated) //oturum açtı mı diye kontrol ettik
+	{
+		username = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+							}
+						}
+
+						<a href="#">
+							<i class="fa fa-user-o"></i> @if (User.Identity.IsAuthenticated)
+							{
+								<div>
+									Logged in Username : @username
+								</div>
+
+							}
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="btn btn-danger" asp-area="" asp-controller="UserLogin" asp-action="LogOut">Çıkış Yap</a>
+					</li>
 					</ul>
+					
+				
+				
 				</div>
 			</div>
 			<!-- /TOP HEADER -->
@@ -120,6 +145,7 @@
 									<div class="qty">2</div>
 								</a>
 							</div>
+							
 							
 								<!-- Cart -->
 								<div class="dropdown">

@@ -11,9 +11,11 @@ namespace ETicaretNew.Controllers
 	public class UserLoginController : Controller
 	{
 
+		
 		private readonly EticaretContext _context;
 
 		public UserLoginController()
+			
 		{
 			_context = new EticaretContext();
 		}
@@ -29,12 +31,11 @@ namespace ETicaretNew.Controllers
             
                 if (ModelState.IsValid)
                 {
-                    _context.Add(user);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Login));
+                    _context.Add(user); // yeni kullanıcı ekledik
+                    await _context.SaveChangesAsync(); //asenkron olarak veritabanıyla iletişime geçip yaptığımız değişiklikleri kaydeder
+                    return RedirectToAction(nameof(Login));//login sayfasına gönderir kaydı yapınca 
                 }
-                return View(user);
-            
+                return View(user);//veriler doğru değilse aynı sayfaya tekrar gelir 
 
         }
 
@@ -82,10 +83,16 @@ namespace ETicaretNew.Controllers
 
 			return user != null;
 		}
-		public IActionResult Logout()
-		{
-			return View();
-		}
+		//public IActionResult Logout()
+		//{
+		//	return View();
+		//}
+        public async Task<IActionResult> LogOut()
+        {
+			//kullanıcıyı belirtilen kimlik doğrulama şemasından çıkış yapmak için kullanılır
+		   await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "UserLogin");
+        }
 
-	}
+    }
 }
