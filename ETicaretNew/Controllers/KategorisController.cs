@@ -47,7 +47,7 @@ namespace ETicaretNew.Controllers
         // GET: Kategoris/Create
         public IActionResult Create()
         {
-            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "UrunId");
+            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "Adi");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace ETicaretNew.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "UrunId", kategori.Adi);
+            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "Adi", kategori.Adi);
             return View(kategori);
         }
 
@@ -81,7 +81,7 @@ namespace ETicaretNew.Controllers
             {
                 return NotFound();
             }
-            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "UrunId", kategori.Adi);
+            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "Adi", kategori.Adi);
             return View(kategori);
         }
 
@@ -117,7 +117,7 @@ namespace ETicaretNew.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "UrunId", kategori.Adi);
+            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "Adi", kategori.Adi);
             return View(kategori);
         }
 

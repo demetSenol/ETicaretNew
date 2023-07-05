@@ -17,11 +17,12 @@ namespace ETicaretNew.Controllers
         }
         public IActionResult Index()
         {
-            ClaimsPrincipal claimUser = HttpContext.User;
-            if (claimUser.Identity.IsAuthenticated)
+            ClaimsPrincipal claimUser = HttpContext.User;// mevcut kullanıcının taleplerini içeren bir "ClaimsPrincipal" nesnesi alınır.
+            if (claimUser.Identity.IsAuthenticated)//kullanıcının kimlik doğrulamasının gerçekleşip gerçekleşmediği kontrol edilir
             {
                 return RedirectToAction("Index", "Admin");
             }
+            //Eğer kullanıcının kimlik doğrulaması gerçekleşmemişse varsayılan "Index" döndürülür.
             return View();
         }
         [HttpPost]

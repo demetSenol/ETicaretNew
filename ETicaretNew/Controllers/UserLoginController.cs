@@ -55,7 +55,7 @@ namespace ETicaretNew.Controllers
 					if (CheckUser(entity.Email, entity.Sifre))//user var mı yok mu diye kontrol ettik
 					{//veriler doğru ise
 						var claims = new List<Claim>();
-						claims.Add(new Claim(ClaimTypes.NameIdentifier, entity.Email));
+						claims.Add(new Claim(ClaimTypes.NameIdentifier, entity.Email)); //yeni claim nesnesinde kullanıcının kimlik bilgilerinden emailini tanımlamak içindir.
 						ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 						ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 						await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);

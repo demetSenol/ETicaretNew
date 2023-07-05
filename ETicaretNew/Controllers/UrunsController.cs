@@ -63,10 +63,10 @@ namespace ETicaretNew.Controllers
                 {
                     var galeri = new Galeri
                     {
-                        Resim = publicClass.ImgToBase64(file)
+                        Resim = publicClass.ImgToBase64(file) //viewden aldığımız resmi gönderdik karşılığında base64 olarak döndürdü
                     };
 
-                    urun.Galeris.Add(galeri); // Her bir resmi araclar.AracResims'e ekleyin
+                    urun.Galeris.Add(galeri); // Her bir resmi urunun galerisine ekler 
                 }
 
                 await _context.SaveChangesAsync();
@@ -96,7 +96,7 @@ namespace ETicaretNew.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UrunId,Adi,Aciklama,Fiyat,Anasayfa,Stok,KategoriId")] Urun urun)
+        public async Task<IActionResult> Edit(int id, [FromForm] Urun urun)
         {
             if (id != urun.UrunId)
             {

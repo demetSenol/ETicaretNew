@@ -47,7 +47,8 @@ namespace ETicaretNew.Controllers
         // GET: Galeris/Create
         public IActionResult Create()
         {
-            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "UrunId");
+            ViewData["UrunId"] = new SelectList(_context.Uruns, "UrunId", "Adi");
+           
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace ETicaretNew.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ResimId,Resim,UrunId")] Galeri galeri)
+        public async Task<IActionResult> Create([FromForm] Galeri galeri)
         {
             if (ModelState.IsValid)
             {

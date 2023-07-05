@@ -1,12 +1,9 @@
-﻿using ETicaretNew.MetaData;
-using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace ETicaretNew.Models;
-[MetadataType(typeof(UserMetaData))]
-public partial class User 
+
+public partial class User
 {
     public int UserId { get; set; }
 

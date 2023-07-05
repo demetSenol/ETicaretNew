@@ -3,13 +3,18 @@
 namespace ETicaretNew.Models
 {
 	public partial class  Urun
+
+       
 	{
-		[NotMapped]
+
+        //viewden resimleri almak için ekledik
+        [NotMapped]
 		public List<IFormFile> ImageFile{ get; set; }
 
 		[NotMapped]
         public List<Galeri>? Resimler { get; set; }
 
+        //galeriden resimleri çekeriz
         public List<Galeri> GetGaleris(int urunId)
         {
             using (var _context = new EticaretContext())

@@ -18,15 +18,22 @@ builder.Services.AddControllersWithViews();
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlCon"));
 //});
 
+ void ConfigureServices(IServiceCollection services)
+{
+	services.AddSession();// Oturum yönetimini etkinleþtirme
+}
 
-
+void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+{
+	app.UseSession();// Oturum yöneticisini etkinleþtirme
+}
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x =>
 {
 	x.Cookie.Name = "LoginCookie";
-	x.LoginPath = "/UserLogin/Login";
-	x.LogoutPath = "/UserLogin/Logout";
+	x.LoginPath = "/UserLogin/Login"; //oturum açýlmadýðý durumda yönlendirileceði giriþ sayfasýnýn url'si
+	x.LogoutPath = "/UserLogin/Logout"; //çýkýþ url'si
 	x.ReturnUrlParameter = "returnUrl";
 	x.ExpireTimeSpan = TimeSpan.FromMinutes(2);
 
@@ -36,7 +43,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 		OnRedirectToLogin = context =>
 		{
 			// Redirect yapýlacak controller ve action'ý belirleme
-			if (context.Request.Path.StartsWithSegments("/Admin")) // yolun /Admin ile baþlayýp baþlamadýðýný kontrol eder
+			if (context.Request.Path.StartsWithSegments("/Admin")) // istek yolunun /Admin ile baþlayýp baþlamadýðýný kontrol eder
 			{
 				context.Response.Redirect("/Login/Index"); //öyle ise admin login'e 
 			}

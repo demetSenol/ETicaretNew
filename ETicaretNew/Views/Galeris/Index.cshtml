@@ -26,10 +26,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Resim)
+                    <img src="data:image;base64,@Html.DisplayFor(modelItem => item.Resim)" alt="base64 e dönüştürülmüş resim" style="height:80px; width:80px;">
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Urun.UrunId)
+                @Html.DisplayFor(modelItem => item.Urun.Adi)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ResimId">Edit</a> |

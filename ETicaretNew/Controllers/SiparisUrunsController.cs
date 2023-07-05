@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ETicaretNew.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace ETicaretNew.Controllers
 {
@@ -18,12 +19,51 @@ namespace ETicaretNew.Controllers
             _context = new EticaretContext();
         }
 
+
         // GET: SiparisUruns
         public async Task<IActionResult> Index()
         {
-            var eticaretContext = _context.SiparisUruns.Include(s => s.SiparisId).Include(s => s.Urun);
+			// !hata çözümü sonrası açılacak
+			//sepetin oturum nesnesinden alınması
+			//var cart = HttpContext.Session.Get<SiparisUrun>("SiparisUrun");
+
+			//         if (cart == null)
+			//         {
+			//             // Sepet boşsa varsayılan bir değer döndürme
+			//             cart = new SiparisUrun();
+			//             cart.Uruns=new List<Urun>();
+			//         }
+
+			//         return View(cart);
+
+			var eticaretContext = _context.SiparisUruns.Include(s => s.SiparisId).Include(s => s.Urun);
             return View(await eticaretContext.ToListAsync());
+            
         }
+        // !hata çözümü sonrası açılacak
+		//[HttpPost]
+  //      public IActionResult AddToCart(Urun urun)  
+  //      {
+  //          //Sepetin oturum nesnesinden alınması 
+  //          var cart = HttpContext.Session.Get<SiparisUrun>("SiparisUrun");
+
+  //          if (cart == null)
+  //          {
+  //              //Sepet oluşturulması
+  //              cart = new SiparisUrun();
+  //              cart.Uruns = new List<Urun>();
+
+  //          }
+
+  //          //Urunun sepete eklenmesi
+  //          cart.Uruns.Add(urun);
+
+  //          // Sepetin oturum nesnesine kaydedilmesi
+  //          HttpContext.Session.Set("SiparisUrun", cart);
+
+         
+  //          return RedirectToAction("Index");
+  //      }
 
         // GET: SiparisUruns/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -58,7 +98,7 @@ namespace ETicaretNew.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("KayitId,SiparisId,UrunId,SiparisTarihi,SiparisDurumu,Adet,BririmFiyat")] SiparisUrun siparisUrun)
+        public async Task<IActionResult> Create([FromForm] SiparisUrun siparisUrun)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +134,7 @@ namespace ETicaretNew.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("KayitId,SiparisId,UrunId,SiparisTarihi,SiparisDurumu,Adet,BririmFiyat")] SiparisUrun siparisUrun)
+        public async Task<IActionResult> Edit(int id, [FromForm] SiparisUrun siparisUrun)
         {
             if (id != siparisUrun.KayitId)
             {

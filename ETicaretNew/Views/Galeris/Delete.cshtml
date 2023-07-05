@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_FrontendLayout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>Delete</h2>
@@ -16,13 +16,13 @@
             @Html.DisplayNameFor(model => model.Resim)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Resim)
+            <img src="data:image;base64,@Html.DisplayFor(model => model.Resim)" alt="base64 e dönüştürülmüş resim" style="height:80px; width:80px;">
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Urun)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Urun.UrunId)
+            @Html.DisplayFor(model => model.Urun.Adi)
         </dd>
     </dl>
     
