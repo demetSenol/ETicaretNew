@@ -19,7 +19,7 @@ namespace ETicaretNew.Controllers
         {
              _context=new EticaretContext();
               return _context.Uruns != null ? 
-                          View( _context.Uruns.ToList()) :
+                          View( _context.Uruns.Include(x => x.Kategori).ToList()) :
                           Problem("Entity set 'EticaretContext.Uruns'  is null.");
         }
 
@@ -31,8 +31,9 @@ namespace ETicaretNew.Controllers
                 return NotFound();
             }
 
-            var urun = await _context.Uruns
-                .FirstOrDefaultAsync(m => m.UrunId == id);
+                   var urun = await _context.Uruns
+    .Include(x => x.Kategori) // İlişkili Kategori varlığını yükle
+    .FirstOrDefaultAsync(m => m.UrunId == id);
             if (urun == null)
             {
                 return NotFound();
@@ -78,6 +79,7 @@ namespace ETicaretNew.Controllers
         // GET: Uruns/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["KategoriId"] = new SelectList(_context.Kategoris, "KategoriId", "Adi");
             if (id == null || _context.Uruns == null)
             {
                 return NotFound();
@@ -144,13 +146,15 @@ namespace ETicaretNew.Controllers
                 return NotFound();
             }
 
+            //var urun = await _context.Include<Urun>(x=> x.KategoriId).Uruns
+            //    .FirstOrDefaultAsync(m => m.UrunId == id);
             var urun = await _context.Uruns
-                .FirstOrDefaultAsync(m => m.UrunId == id);
+    .Include(x => x.Kategori) // İlişkili Kategori varlığını yükle
+    .FirstOrDefaultAsync(m => m.UrunId == id);
             if (urun == null)
             {
                 return NotFound();
             }
-
             return View(urun);
         }
 

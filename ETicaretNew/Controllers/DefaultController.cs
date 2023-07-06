@@ -20,16 +20,32 @@ namespace ETicaretNew.Controllers
 		//      }
 		public IActionResult Index()
 		{
-			_context = new EticaretContext();
 			return _context.Uruns != null ?
 						View(_context.Uruns.ToList()) :
 						Problem("Entity set 'EticaretContext.Uruns'  is null.");
 		}
-		public IActionResult Cart()
-        {
-            return View();
-        }
-        public IActionResult Checkout()
+		// GET: Siparis/Details/5
+		public async Task<IActionResult> Sepet(int? id)
+		{
+			if (id == null || _context.Siparis == null)
+			{
+				return NotFound();
+			}
+
+			var sipari = await _context.Siparis
+				.Include(s => s.Adres)
+				.Include(s => s.SiparisUruns)
+				 .ThenInclude(u => u.Urun)
+				.Include(s => s.Uye)
+				.FirstOrDefaultAsync(m => m.SiparisId == id);
+			if (sipari == null)
+			{
+				return NotFound();
+			}
+
+			return View(sipari);
+		}
+		public IActionResult Checkout()
         {
             return View();
         }
@@ -50,9 +66,17 @@ namespace ETicaretNew.Controllers
 			return View(urun);
 		}
 
-		public IActionResult Store()
+		public IActionResult Store(int? id)
 		{
-			return View();	
+            return _context.Uruns != null ?
+                        View(_context.Uruns //.Include(k=>k.Kategori)
+						.Where(x=>x.KategoriId==id).ToList()) :
+                        Problem("Entity set 'EticaretContext.Uruns'  is null.");
+        }
+
+		public IActionResult SepetCheckout() 
+		{
+			return View();
 		}
     }
 }

@@ -21,8 +21,12 @@ namespace ETicaretNew.Controllers
         // GET: Kategoris
         public async Task<IActionResult> Index()
         {
-            var eticaretContext = _context.Kategoris.Include(k => k.Adi);
-            return View(await eticaretContext.ToListAsync());
+           
+            return _context.Kategoris != null ?
+                        View(_context.Kategoris.ToList()) :
+                        Problem("Entity set 'EticaretContext.Uruns'  is null.");
+            //var eticaretContext = _context.Kategoris.Include(k => k.Adi);
+            //return View(await eticaretContext.ToListAsync());
         }
 
         // GET: Kategoris/Details/5

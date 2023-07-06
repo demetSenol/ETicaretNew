@@ -21,7 +21,7 @@ public partial class Uye
 
     public string? Il { get; set; }
 
-    public string PostaKodu { get; set; } = null!;
+    public string? PostaKodu { get; set; }
 
     public string? Sifre { get; set; }
 

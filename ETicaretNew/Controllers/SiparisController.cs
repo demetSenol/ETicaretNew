@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ETicaretNew.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ETicaretNew.Controllers
 {
@@ -18,6 +19,71 @@ namespace ETicaretNew.Controllers
         public SiparisController()
         {
             _context = new EticaretContext();
+        }
+
+        //[HttpPost]//yeni ekledim
+        public IActionResult UrunEkle(int id)
+        {
+            var urun = _context.Uruns.FirstOrDefault(s=>s.UrunId==id);
+            if(urun == null)
+            {
+                return NotFound();
+            }
+			ClaimsPrincipal claimUser = HttpContext.User;
+            if (claimUser.Identity.IsAuthenticated)
+            {
+                var sepetid = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+                var sepet = _context.Siparis.FirstOrDefault(x=> x.SiparisId==sepetid);
+                if(sepet != null)
+                {
+                    var siparisUrun = new SiparisUrun
+                    {
+                        Urun = urun, ///cast yaptık
+                        SiparisId = sepetid,
+                        UrunId = urun.UrunId
+                    };
+					sepet.SiparisUruns.Add(siparisUrun);
+                    _context.SaveChanges();
+					return RedirectToAction("Sepet", "Default", new { id = sepetid });
+				}
+            }
+            else
+            {
+                return RedirectToAction("Login","UserLogin");
+
+			}
+            return RedirectToAction("");
+        }
+
+       // [HttpPost]
+        public IActionResult UrunSil(int id)
+        {
+            var urun = _context.Uruns.FirstOrDefault(s => s.UrunId == id);
+            if (urun == null)
+            {
+                return NotFound();
+            }
+            ClaimsPrincipal claimUser = HttpContext.User;
+            if (claimUser.Identity.IsAuthenticated)
+            {
+                var sepetid = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+                var sepet = _context.Siparis.FirstOrDefault(x => x.SiparisId == sepetid);
+                if (sepet != null)
+                {
+                   var silinecek=_context.SiparisUruns.FirstOrDefault(x=>x.SiparisId==sepetid&&x.UrunId==urun.UrunId);
+                    if (silinecek != null) { 
+                    sepet.SiparisUruns.Remove(silinecek);
+                    _context.SaveChanges();
+                    return RedirectToAction("Sepet", "Default", new { id = sepetid });
+                    }
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "UserLogin");
+
+            }
+            return RedirectToAction("Index","Default");
         }
 
         // GET: Siparis
@@ -60,7 +126,7 @@ namespace ETicaretNew.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SiparisId,UyeId,AdresId,Tutar")] Sipari sipari)
+        public async Task<IActionResult> Create([FromForm] Sipari sipari)
         {
             if (ModelState.IsValid)
             {

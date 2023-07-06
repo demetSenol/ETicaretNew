@@ -13,6 +13,8 @@ public partial class Sipari
 
     public decimal? Tutar { get; set; }
 
+    public string? Durum { get; set; }
+
     public virtual Adre? Adres { get; set; }
 
     public virtual ICollection<SiparisUrun> SiparisUruns { get; set; } = new List<SiparisUrun>();

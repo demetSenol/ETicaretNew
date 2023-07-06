@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace ETicaretNew.Controllers
 {
@@ -26,7 +27,7 @@ namespace ETicaretNew.Controllers
 		}
 		[HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([FromForm]User user)
+        public async Task<IActionResult> Register([FromForm]Uye user)
 		{
             
                 if (ModelState.IsValid)
@@ -45,7 +46,7 @@ namespace ETicaretNew.Controllers
 		}
 		
 		[HttpPost]
-		public async Task<IActionResult> Login([FromForm] User entity)
+		public async Task<IActionResult> Login([FromForm] Uye entity)
 		{
 
 			try
@@ -54,8 +55,33 @@ namespace ETicaretNew.Controllers
 				{
 					if (CheckUser(entity.Email, entity.Sifre))//user var mı yok mu diye kontrol ettik
 					{//veriler doğru ise
-						var claims = new List<Claim>();
-						claims.Add(new Claim(ClaimTypes.NameIdentifier, entity.Email)); //yeni claim nesnesinde kullanıcının kimlik bilgilerinden emailini tanımlamak içindir.
+						var uye = _context.Uyes.FirstOrDefault(x => x.Email == entity.Email && x.Sifre == entity.Sifre);
+						var sepetid = 0;
+						if (uye != null) {
+							var sepet = _context.Siparis.FirstOrDefault(x => x.UyeId == uye.UyeId && x.Durum=="Onaysız"); //kullanıcının sepet durumunu kontrol ettik
+							if (sepet != null) //sepet boş değilse sepetin Id'sini siparisId'ye eşitledik  
+							{
+								sepetid = sepet.SiparisId;
+                            }
+                            else
+							{
+								Sipari yeniSepet = new Sipari 
+								{
+									Durum = "Onaysız",
+									Uye = uye,
+									UyeId=uye.UyeId,
+									Tutar=0
+                                };
+								
+                                _context.Siparis.Add(yeniSepet);
+                                _context.SaveChanges();
+
+                                sepetid = yeniSepet.SiparisId;
+                            }
+                        }
+                        var claims = new List<Claim>();
+						claims.Add(new Claim(ClaimTypes.NameIdentifier, entity.Email));
+						claims.Add(new Claim(ClaimTypes.Sid,sepetid.ToString())); //yeni claim nesnesinde kullanıcının kimlik bilgilerinden emailini tanımlamak içindir.
 						ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 						ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 						await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
@@ -79,7 +105,7 @@ namespace ETicaretNew.Controllers
 		}
 		private bool CheckUser(string email, string sifre)//kullanıcının olup olmadığını anlayabilmek için oluşturduğumuz metod
 		{
-			var user = _context.Users.FirstOrDefault(x => x.Email == email && x.Sifre == sifre);
+			var user = _context.Uyes.FirstOrDefault(x => x.Email == email && x.Sifre == sifre);
 
 			return user != null;
 		}

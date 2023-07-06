@@ -90,6 +90,10 @@ public partial class EticaretContext : DbContext
 
             entity.Property(e => e.SiparisId).HasColumnName("siparisId");
             entity.Property(e => e.AdresId).HasColumnName("adresId");
+            entity.Property(e => e.Durum)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("durum");
             entity.Property(e => e.Tutar)
                 .HasColumnType("decimal(7, 2)")
                 .HasColumnName("tutar");
