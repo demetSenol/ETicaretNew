@@ -21,7 +21,7 @@ namespace ETicaretNew.Controllers
             _context = new EticaretContext();
         }
 
-        //[HttpPost]//yeni ekledim
+     
         public IActionResult UrunEkle(int id)
         {
             var urun = _context.Uruns.FirstOrDefault(s=>s.UrunId==id);
@@ -29,14 +29,14 @@ namespace ETicaretNew.Controllers
             {
                 return NotFound();
             }
-			ClaimsPrincipal claimUser = HttpContext.User;
-            if (claimUser.Identity.IsAuthenticated)
+			ClaimsPrincipal claimUser = HttpContext.User; //mevcut kullanıcı hakkında bilgiler içeren bir nesne oluşturdum
+            if (claimUser.Identity.IsAuthenticated) //kullanıcı oturum açmışsa bu koşullar sağlanır
             {
-                var sepetid = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
-                var sepet = _context.Siparis.FirstOrDefault(x=> x.SiparisId==sepetid);
-                if(sepet != null)
+                var sepetid = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value); //oturum açmış kullanıcının Id sini buluyoruz
+                var sepet = _context.Siparis.FirstOrDefault(x=> x.SiparisId==sepetid); //sepetId değerindeki ilk siparişi Siparis'ten aldık
+                if(sepet != null) //eğer siparişi varsa bu koşul sağlanır
                 {
-                    var siparisUrun = new SiparisUrun
+                    var siparisUrun = new SiparisUrun //siparisUrune yeni bir siparisUrun nesnesi ekledik
                     {
                         Urun = urun, ///cast yaptık
                         SiparisId = sepetid,
@@ -44,46 +44,47 @@ namespace ETicaretNew.Controllers
                     };
 					sepet.SiparisUruns.Add(siparisUrun);
                     _context.SaveChanges();
-					return RedirectToAction("Sepet", "Default", new { id = sepetid });
+					return RedirectToAction("Sepet", "Default", new { id = sepetid });// sepet action'ına sepetId paremetresi ile yönlendiriliyor
 				}
             }
             else
             {
-                return RedirectToAction("Login","UserLogin");
+                return RedirectToAction("Login","UserLogin");//eğer kullancı oturum açmamışsa da login yönlendiriyor
 
 			}
-            return RedirectToAction("");
+            return RedirectToAction("");//diğer durumlarda herhangi bir yönlendirme yapmadan anasayfaya geri dönüyor
         }
 
-       // [HttpPost]
+     
         public IActionResult UrunSil(int id)
         {
-            var urun = _context.Uruns.FirstOrDefault(s => s.UrunId == id);
+            var urun = _context.Uruns.FirstOrDefault(s => s.UrunId == id);//Id değerine sahip ilk urunu Urunsden aldım
             if (urun == null)
             {
                 return NotFound();
             }
             ClaimsPrincipal claimUser = HttpContext.User;
-            if (claimUser.Identity.IsAuthenticated)
+            if (claimUser.Identity.IsAuthenticated) 
             {
                 var sepetid = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
                 var sepet = _context.Siparis.FirstOrDefault(x => x.SiparisId == sepetid);
                 if (sepet != null)
                 {
-                   var silinecek=_context.SiparisUruns.FirstOrDefault(x=>x.SiparisId==sepetid&&x.UrunId==urun.UrunId);
-                    if (silinecek != null) { 
-                    sepet.SiparisUruns.Remove(silinecek);
+                   var silinecek=_context.SiparisUruns.FirstOrDefault(x=>x.SiparisId==sepetid&&x.UrunId==urun.UrunId);//sepetId ve urunId değerine sahip olan ilk siparisUrun nesnesini sşparisUrunsden alır
+                    if (silinecek != null) //belirtilen ürün sepetin iççinde bulunuyorsa 
+                    { 
+                    sepet.SiparisUruns.Remove(silinecek);//siparisUrunsden silinecek nesnesini kaldırıyoruz
                     _context.SaveChanges();
-                    return RedirectToAction("Sepet", "Default", new { id = sepetid });
+                    return RedirectToAction("Sepet", "Default", new { id = sepetid }); 
                     }
                 }
             }
             else
             {
-                return RedirectToAction("Login", "UserLogin");
+                return RedirectToAction("Login", "UserLogin");//oturum açmamış kullanıcıları buraya yönlendiirir
 
             }
-            return RedirectToAction("Index","Default");
+            return RedirectToAction("Index","Default");//diğer durumlarda anasayfaya gönderir
         }
 
         // GET: Siparis
@@ -233,9 +234,9 @@ namespace ETicaretNew.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SipariExists(int id)
+        private bool SipariExists(int id)//bu metod sipariisn veritabanında olup oladığını kontrol eder
         {
-          return (_context.Siparis?.Any(e => e.SiparisId == id)).GetValueOrDefault();
+          return (_context.Siparis?.Any(e => e.SiparisId == id)).GetValueOrDefault(); //nensenin veritabanındaki varlığını kontrol eder null ise null hatası olmaz varsayılan(false)döner
         }
     }
 }
