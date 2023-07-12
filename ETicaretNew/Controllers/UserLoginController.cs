@@ -118,6 +118,7 @@ namespace ETicaretNew.Controllers
 			//kullanıcıyı belirtilen kimlik doğrulama şemasından çıkış yapmak için kullanılır
 		   await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "UserLogin");
+
         }
 
     }

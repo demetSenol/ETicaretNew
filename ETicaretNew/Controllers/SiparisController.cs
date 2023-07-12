@@ -43,6 +43,7 @@ namespace ETicaretNew.Controllers
                         UrunId = urun.UrunId
                     };
 					sepet.SiparisUruns.Add(siparisUrun);
+                    
                     _context.SaveChanges();
 					return RedirectToAction("Sepet", "Default", new { id = sepetid });// sepet action'ına sepetId paremetresi ile yönlendiriliyor
 				}
@@ -71,11 +72,11 @@ namespace ETicaretNew.Controllers
                 if (sepet != null)
                 {
                    var silinecek=_context.SiparisUruns.FirstOrDefault(x=>x.SiparisId==sepetid&&x.UrunId==urun.UrunId);//sepetId ve urunId değerine sahip olan ilk siparisUrun nesnesini sşparisUrunsden alır
-                    if (silinecek != null) //belirtilen ürün sepetin iççinde bulunuyorsa 
+                    if (silinecek != null) //belirtilen ürün sepetin içinde bulunuyorsa 
                     { 
                     sepet.SiparisUruns.Remove(silinecek);//siparisUrunsden silinecek nesnesini kaldırıyoruz
                     _context.SaveChanges();
-                    return RedirectToAction("Sepet", "Default", new { id = sepetid }); 
+                    return RedirectToAction("Sepet", "Default", new { id = sepetid }); //işlem burada sona erdi
                     }
                 }
             }
@@ -234,9 +235,9 @@ namespace ETicaretNew.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SipariExists(int id)//bu metod sipariisn veritabanında olup oladığını kontrol eder
+        private bool SipariExists(int id)//bu metod siparisin veritabanında olup oladığını kontrol eder
         {
-          return (_context.Siparis?.Any(e => e.SiparisId == id)).GetValueOrDefault(); //nensenin veritabanındaki varlığını kontrol eder null ise null hatası olmaz varsayılan(false)döner
+          return (_context.Siparis?.Any(e => e.SiparisId == id)).GetValueOrDefault(); //nesnenin veritabanındaki varlığını kontrol eder null ise null hatası olmaz varsayılan(false)döner
         }
     }
 }
